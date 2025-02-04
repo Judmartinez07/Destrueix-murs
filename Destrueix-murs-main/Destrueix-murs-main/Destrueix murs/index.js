@@ -4,8 +4,9 @@
  canvas.height = 512;
  canvas.width = 448; 
 
+let vida = 3
 
- // variables Pilota 
+// variables Pilota 
  let radiPilota = 7;
  let x = canvas.width / 2
  let y = canvas.height - 30
@@ -66,9 +67,17 @@ let palaY = canvas.height - alturaPala  - 10
       dy=-dy
    }
     // GAME OVER
-    if(y + dy > canvas.height){
-      console.log("GAME OVER")
-      document.location.reload();
+    if(y == palaY && palaX >= x <= palaX+amplePala ){
+      dy = -dy
+    }
+    else if(y > canvas.height){
+         vida--
+         dx = 2;
+         dy = -2;
+         x = canvas.width /2
+         y = canvas.height - 30
+     // console.log("GAME OVER")
+     // document.location.reload();
     }
    x += dx
    y += dy 
@@ -130,6 +139,7 @@ let palaY = canvas.height - alturaPala  - 10
       },3000)
 
    }
+
 }
    
    function soltar(event){
@@ -154,7 +164,10 @@ let palaY = canvas.height - alturaPala  - 10
     deteccioColisio();
     movimentPilota();
     movimentPala();
+    ctx.fillText("vida = " + vida,10,80);
     window.requestAnimationFrame(pintarCanvas);
+
+
  }
 
  pintarCanvas();
