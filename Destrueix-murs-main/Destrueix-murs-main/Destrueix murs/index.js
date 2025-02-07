@@ -4,8 +4,11 @@
  canvas.height = 512;
  canvas.width = 448; 
 
+const sprites = document.getElementById ("sprite")
+const m = document.getElementById("m")
+
 let vida = 3 
-let color = ["#ff5733","#ff8a33","#f0ff33","#33beff","#1d6d92","#0336f2","#1e2b5b","#5407ef","#39275b","#66448c","#f105cd","#872a79","#eab1d3","#6d1549"]
+let colors = ["#ff5733","#ff8a33","#f0ff33","#33beff","#1d6d92","#0336f2","#1e2b5b","#5407ef","#39275b","#66448c","#f105cd","#872a79","#eab1d3","#6d1549"]
 // variables Pilota 
  let radiPilota = 7;
  let x = canvas.width / 2
@@ -40,7 +43,7 @@ const ESTAT_MUR = {
 for(let c=0; c<columnes; c++){
    murs[c] = [];
    for(let f=0; f<filas; f++){
-      const color = color[Math.floor(Math.random()*14)]
+      const color = Math.floor(Math.random()*10)
       const murX = margeEMur+c*(ampleMur+sepMurs)
       const murY = margeTMur+f*(alturaMur+sepMurs)
       murs[c][f] = {
@@ -62,8 +65,19 @@ for(let c=0; c<columnes; c++){
  }
 
  function pintarPala(){
-   ctx.fillStyle = "#8c2978"
-   ctx.fillRect(palaX,palaY,amplePala,alturaPala)
+   //ctx.fillStyle = "#8c2978"
+   //ctx.fillRect(palaX,palaY,amplePala,alturaPala)
+   ctx.drawImage(
+      sprite,
+      29,
+      174,
+      amplePala,
+      alturaPala,
+      palaX,
+      palaY,
+      amplePala,
+      alturaPala
+   )
  }
 
  function pintarMurs(){
@@ -73,9 +87,21 @@ for(let c=0; c<columnes; c++){
          if(murActual.status == ESTAT_MUR.DESTRUIT){
             continue;
          }
-         ctx,fillStyle = murActual.color;
-         ctx.rect(murActual.x,murActual.y,ampleMur,alturaMur)
-         ctx.fill();
+         //ctx,fillStyle = murActual.color;
+         //ctx.rect(murActual.x,murActual.y,ampleMur,alturaMur)
+         //ctx.fill();
+         let clipX = murActual.color*16
+         ctx.drawImage(
+            m,
+            clipX,
+            0,
+            15,
+            6,
+            murActual.x,
+            murActual.y,
+            ampleMur,
+            alturaMur
+         )
        }
    }
 }
@@ -102,14 +128,14 @@ for(let c=0; c<columnes; c++){
    if(x + dx  >= canvas.width || x + dx <=0 + radiPilota){
       dx= -dx
    }
+   if(y + dy <= 0){
+      dy=-dy
+   }
 
    const mateixaX = x > palaX && x < palaX + amplePala;
    const mateixaY = y + dy > palaY
 
-   //REBOT EIX Y
-   if(y + dy <= 0){
-      dy=-dy
-   }
+
     // GAME OVER
     if(mateixaX && mateixaY){
       dy = -dy
