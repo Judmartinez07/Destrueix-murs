@@ -106,8 +106,23 @@ for(let c=0; c<columnes; c++){
    }
 }
  function deteccioColisio(){
+   for(let c=0; c<columnes; c++){
+    for(let f=0; f<filas; f++){
+        const murActual = murs[c][f];
+         if(murActual.status == ESTAT_MUR.DESTRUIT){
+           continue;
+         }
+         const mateixaXMur = murActual 
+         const mateixaYMur = alturaMur
+       if(murActual < && = > ampleMur ){
+       dy = -dy;
+       murActual.status = ESTAT_MUR.DESTRUIT
+      }
 
  }
+   }
+}
+
 
 
  function movimentPala(){
