@@ -7,7 +7,7 @@
 const sprites = document.getElementById ("sprite")
 const m = document.getElementById("m")
 
-let vida = 3 
+
 let colors = ["#ff5733","#ff8a33","#f0ff33","#33beff","#1d6d92","#0336f2","#1e2b5b","#5407ef","#39275b","#66448c","#f105cd","#872a79","#eab1d3","#6d1549"]
 // variables Pilota 
  let radiPilota = 7;
@@ -112,9 +112,9 @@ for(let c=0; c<columnes; c++){
          if(murActual.status == ESTAT_MUR.DESTRUIT){
            continue;
          }
-         const mateixaXMur = murActual 
-         const mateixaYMur = alturaMur
-       if(murActual < && = > ampleMur ){
+         const mateixaXMur = x > murActual.x && x < murActual.x + ampleMur 
+         const mateixaYMur = y > murActual.y && y < murActual.y + alturaMur
+       if(mateixaXMur && mateixaYMur){
        dy = -dy;
        murActual.status = ESTAT_MUR.DESTRUIT
       }
@@ -123,7 +123,9 @@ for(let c=0; c<columnes; c++){
    }
 }
 
-
+// Var Vida 
+let vida = 3;
+let novida = false;
 
  function movimentPala(){
    if(dreta && palaX < canvas.width - amplePala){
@@ -156,19 +158,26 @@ for(let c=0; c<columnes; c++){
       dy = -dy
     }
     else if(y + dy > canvas.height){
-         vida--
-         dx = 2;
-         dy = -2;
-         x = canvas.width /2
-         y = canvas.height - 30
-         if(vida==0){
-     console.log("GAME OVER")
-     document.location.reload();
+         vida-=1;
+         if(vida > 0){
+            x = canvas.width/2;
+            y = canvas.height - 40;
+            palaX = (canvas.width - amplePala)/2;
+            palaY = canvas.height - alturaPala - 10; 
          }
+      }
+      else{
+         ctx.font = "34px serif";
+         ctx.textAlign = "center";
+         ctx.fillText("GAME OVER", canvas.height/2, canvas.width/2)
+         setTimeout(()=>{
+            document.location.reload();
+         }, 5000)  
+      }
     }
-   x += dx
-   y += dy 
-   }
+   
+    
+   
    
  
  function borrarPantalla(){
