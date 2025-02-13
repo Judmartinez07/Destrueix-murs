@@ -165,15 +165,21 @@ let novida = false;
             palaX = (canvas.width - amplePala)/2;
             palaY = canvas.height - alturaPala - 10; 
          }
-      }
-      else{
-         ctx.font = "34px serif";
+         else{
+        ctx.font = "34px serif";
          ctx.textAlign = "center";
          ctx.fillText("GAME OVER", canvas.height/2, canvas.width/2)
+         x = canvas.width/2;
+         y = canvas.height - 40;
+         dx=0;
+         dy=0;
          setTimeout(()=>{
             document.location.reload();
          }, 5000)  
       }
+      }
+       x += dx;
+       y += dy;
     }
    
     
