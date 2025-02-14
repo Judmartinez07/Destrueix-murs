@@ -125,7 +125,8 @@ for(let c=0; c<columnes; c++){
 
 // Var Vida 
 let vida = 3;
-let novida = false;
+let gameOver = false;
+
 
  function movimentPala(){
    if(dreta && palaX < canvas.width - amplePala){
@@ -148,39 +149,87 @@ let novida = false;
    if(y + dy <= 0){
       dy=-dy
    }
-
+ }
    const mateixaX = x > palaX && x < palaX + amplePala;
    const mateixaY = y + dy > palaY
 
+   function gameLoop() {
+
+      if (mateixaX && mateixaY) {
+         dy = -dy;
+     } else if (y + dy > canvas.height) {
+         vida -= 1;
+         if (vida > 0) {
+             x = canvas.width / 2;
+             y = canvas.height - 40;
+             palaX = (canvas.width - amplePala) / 2;
+             palaY = canvas.height - alturaPala - 10;
+             dx = 2
+             dy = -2
+         } else {
+            console.log("GAME OVER")
+            dx = 0;
+            dy = 0;
+  
+            ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2);
+
+         }
+      }
+  
+      x += dx;
+      y += dy;
+  }
+  
+  function restartGame(event) {
+   if (event.key === ' ') {
+      if (gameOver) {
+         vida = 3;
+            gameOver = false;
+            x = canvas.width / 2;
+            y = canvas.height - 40;
+            dx = 2;
+            dy = -2;
+            document.location.reload();
+            palaX = (canvas.width - amplePala) / 2;
+            palaY = canvas.height - alturaPala - 10;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            gameLoop();
+         }
+      }
+  }
+  document.addEventListener('keydown', restartGame);
+  setInterval(gameLoop, 1000 / 60);
+
+
+
 
     // GAME OVER
-    if(mateixaX && mateixaY){
-      dy = -dy
-    }
-    else if(y + dy > canvas.height){
-         vida-=1;
-         if(vida > 0){
-            x = canvas.width/2;
+   // if(mateixaX && mateixaY){
+  //    dy = -dy
+   // }
+   // else if(y + dy > canvas.height){
+      //   vida-=1;
+  //x = canvas.width/2; 
             y = canvas.height - 40;
             palaX = (canvas.width - amplePala)/2;
             palaY = canvas.height - alturaPala - 10; 
-         }
-         else{
-        ctx.font = "34px serif";
-         ctx.textAlign = "center";
-         ctx.fillText("GAME OVER", canvas.height/2, canvas.width/2)
-         x = canvas.width/2;
-         y = canvas.height - 40;
-         dx=0;
-         dy=0;
-         setTimeout(()=>{
-            document.location.reload();
-         }, 5000)  
-      }
-      }
-       x += dx;
-       y += dy;
-    }
+      //   }
+       //  else{
+      //  ctx.font = "34px serif";
+      //   ctx.textAlign = "center";
+        // ctx.fillText("GAME OVER", canvas.height/2, canvas.width/2)
+       //  x = canvas.width/2;
+       //  y = canvas.height - 40;
+       //  dx=0;
+       //  dy=0;
+       //  setTimeout(()=>{
+      //    document.location.reload();
+      //   }, 5000)  
+    //  }
+    //  }
+      // x += dx;
+      // y += dy;
+    //} 
    
     
    
