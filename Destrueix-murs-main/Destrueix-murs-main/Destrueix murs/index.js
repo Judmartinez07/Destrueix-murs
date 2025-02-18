@@ -4,8 +4,9 @@
  canvas.height = 512;
  canvas.width = 448; 
 
-const sprites = document.getElementById ("sprite")
-const m = document.getElementById("m")
+const sprites = document.getElementById ("spMrite")
+const m = document.getElementById("m");
+ 
 
 
 let colors = ["#ff5733","#ff8a33","#f0ff33","#33beff","#1d6d92","#0336f2","#1e2b5b","#5407ef","#39275b","#66448c","#f105cd","#872a79","#eab1d3","#6d1549"]
@@ -149,13 +150,10 @@ let gameOver = false;
    if(y + dy <= 0){
       dy=-dy
    }
- }
    const mateixaX = x > palaX && x < palaX + amplePala;
    const mateixaY = y + dy > palaY
-
-   function gameLoop() {
-
-      if (mateixaX && mateixaY) {
+  
+   if (mateixaX && mateixaY) {
          dy = -dy;
      } else if (y + dy > canvas.height) {
          vida -= 1;
@@ -167,38 +165,19 @@ let gameOver = false;
              dx = 2
              dy = -2
          } else {
-            console.log("GAME OVER")
+            gameOver = true;
             dx = 0;
             dy = 0;
-  
-            ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2);
-
+           
          }
       }
-  
       x += dx;
-      y += dy;
+      y += dy; 
   }
+
+
+
   
-  function restartGame(event) {
-   if (event.key === ' ') {
-      if (gameOver) {
-         vida = 3;
-            gameOver = false;
-            x = canvas.width / 2;
-            y = canvas.height - 40;
-            dx = 2;
-            dy = -2;
-            document.location.reload();
-            palaX = (canvas.width - amplePala) / 2;
-            palaY = canvas.height - alturaPala - 10;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            gameLoop();
-         }
-      }
-  }
-  document.addEventListener('keydown', restartGame);
-  setInterval(gameLoop, 1000 / 60);
 
 
 
@@ -237,7 +216,7 @@ let gameOver = false;
  
  function borrarPantalla(){
    canvas.height = 512;
-   canvas.width = 448;
+   canvas.width = 448; 
  }
 
  function inicialitzadorEvents(){
@@ -290,6 +269,9 @@ let gameOver = false;
       },3000)
 
    }
+   if(event.key == '9'){
+      window.location.reload();
+   }
 
 }
    
@@ -316,10 +298,13 @@ let gameOver = false;
     movimentPilota();
     movimentPala();
     ctx.fillText("vida = " + vida,10,80);
+    if(gameOver){
+      ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2);
+    }
     window.requestAnimationFrame(pintarCanvas);
-
-
  }
 
+ let snd = new Audio ('./lost-in-dreams-abstract-chill-downtempo-cinematic-future-beats-270241.mp3');
+                     snd.play();
  pintarCanvas();
  inicialitzadorEvents()
