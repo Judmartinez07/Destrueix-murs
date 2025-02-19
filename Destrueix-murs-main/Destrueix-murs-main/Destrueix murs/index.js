@@ -223,6 +223,8 @@ let gameOver = false;
    document.addEventListener ('keydown', pulsar)
    document.addEventListener ('keyup', soltar)
 
+   setTimeout(snd.play(),5000)
+
    function pulsar(event){
    if(event.key == 'ArrowRight'){
       dreta=true;
@@ -297,14 +299,16 @@ let gameOver = false;
     deteccioColisio();
     movimentPilota();
     movimentPala();
-    ctx.fillText("vida = " + vida,10,80);
+    ctx.fillText("vides = " + vida,10,80);
+   
     if(gameOver){
-      ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2);
+      ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 15,  );    
     }
     window.requestAnimationFrame(pintarCanvas);
  }
 
  let snd = new Audio ('./lost-in-dreams-abstract-chill-downtempo-cinematic-future-beats-270241.mp3');
-                     snd.play();
+
+                    
  pintarCanvas();
  inicialitzadorEvents()
